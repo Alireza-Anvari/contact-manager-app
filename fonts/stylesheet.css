@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'Vazir';
+    src: url('Vazir.eot');
+    src: url('Vazir.eot?#iefix') format('embedded-opentype'),
+        url('Vazir.woff2') format('woff2'),
+        url('Vazir.woff') format('woff'),
+        url('Vazir.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vazir';
+    src: url('Vazir_1.eot');
+    src: url('Vazir_1.eot?#iefix') format('embedded-opentype'),
+        url('Vazir_1.woff2') format('woff2'),
+        url('Vazir_1.woff') format('woff'),
+        url('Vazir_1.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
