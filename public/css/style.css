@@ -1,0 +1,542 @@
+@font-face {
+  font-family: "Vazir";
+  src: url("../fonts/Vazir.eot");
+  src: url("../fonts/Vazir.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/Vazir.woff2") format("woff2"),
+    url("../fonts/Vazir.woff") format("woff"),
+    url("../fonts/Vazir.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  padding: 0;
+  margin: 0;
+}
+li{list-style: none;}
+ul{margin: 0;padding: 0;}
+
+.form-control:focus {
+  /* border:2px solid black !important */
+  box-shadow: 0 0 0 0.15rem #03a9f4 !important;
+}
+
+.menubar {
+  background: #03a9f4;
+  padding: 5px 5px;
+  position: relative;
+  height: 45px;
+  width: 100%;
+}
+.menuHamburger {
+  display: none;
+  font-size: 1.5rem;
+  color: #fff;
+}
+.menuWide {
+  display: block;
+  position: absolute;
+  background-color: #03a9f4;
+}
+.menuWide > * {
+  display: inline-block;
+  background-color: #202020;
+  list-style: none;
+  text-decoration: none;
+  color: #202020;
+  padding: 5px 30px;
+  margin-right: 5px;
+}
+
+
+h3 path{stroke: #03a9f4 !important;}
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 992px) {
+  /* .container-fluid{padding: 0 !important}  این خط باعث میشود اسکرول افقی اضافه شود */
+  .menuHamburger {
+    display: block !important;
+    margin-right: 5px !important;
+  }
+  .menubar {
+    padding: 5px 0px !important;
+  }
+  .menuWide > * {
+    display: block !important;
+    margin: 0 !important;
+    padding: 5px 10px 5px 100px !important  ;
+    border-bottom: 2px solid #03a9f4;
+    border-left: 1px solid #03a9f4;
+  }
+  .menuWide {
+    display: block !important;
+    position: absolute;
+    /* background-color: coral; */
+    top: 45px;
+    right: -250px;
+    transition: 0.5s;
+    height: 100vh !important;
+    z-index: 100;
+  }
+  .menuWide.active {
+    display: block !important;
+    right: 0px;
+    transition: 0.5s;
+    height: 100vh !important;
+
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#addContactBar{
+
+  background-color: #fff;
+
+}
+#addContactBtn{
+  background-color: #03a9f4 !important;
+  color:#fff;
+  padding:8px 50px
+}
+.card{
+  background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%)
+}
+.card:nth-child(1),.card:nth-child(2){
+  margin: 0 !important;
+}
+.cardImage{
+
+  height:150px;overflow:hidden;
+  border-left: 1px solid #fff !important;
+}
+.cardImage>img{
+width:100px;height:100px;border-radius:150px;opacity:0.5;object-fit: cover;
+}
+.cardImage:hover img{
+  width: 100% !important;
+  height: 150px !important;
+  transition: 0.1s;
+  border-radius: 0 !important;
+  opacity: 1 !important;
+
+}
+
+.cardLeft{
+border-right: 1px solid #fff !important;
+}
+.cardLeft>*{
+  /* font-size: 1.8rem; */
+  background-color: #fff;
+  padding: 5px;
+  color:#03a9f4;
+ 
+}
+.cardContent ul li{
+  padding:3px 7px;margin-top:5px
+}
+
+
+
+.iconCardLeft{
+  /* transition: 0.1s; */
+  background-color: #fff;
+  font-size: 1.3rem;
+  height: 100%;
+  transition: 0.1s;
+  
+
+  }
+  
+  
+
+  .cardLeft>a:hover .iconCardLeft {
+    /* .iconCardLeft:hover{ */
+      background-color: #202020;
+      /* font-size: 1.2rem; */
+      /* cursor: pointer; */
+      /* color:#fff !important; */
+      /* border-radius: 3px; */
+    
+    }
+    .cardLeft>a:hover {
+      /* .iconCardLeft:hover{ */
+        background-color: #202020;
+        /* font-size: 1.2rem; */
+        /* cursor: pointer; */
+        color:#fff !important;
+        border-radius: 5px;
+      
+      }
+
+      .cardLeft>a {
+     transition: 0.1s;
+        
+        }
+  
+  
+  
+/* @media only screen and (max-width: 992px) { */
+
+@media screen and (max-width:992px){
+  .cardContent ul li span{
+    font-size: 0.8rem  !important;
+  }
+  .card:nth-child(2){
+    margin-top: 0.5rem !important;
+  }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*start class component addContact */
+.noteFormActive{
+  color:red
+}
+
+@media screen and (max-width:992px){
+  
+  .addContact label ,.addContact input ,.addContact select,.noteFormActive{
+    width: 100% !important;
+
+  }
+  .addContact label {
+    width: 100% !important;
+    margin: 15px 0 1px 0 !important;
+  }
+  #removePreviewAddContact{
+    left: 30% !important;
+    
+  
+  }
+}
+
+#removePreviewAddContact{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 0;
+  left: 36%;
+  transform: translate(-30%,0);
+  
+
+}
+#removePreviewAddContact:hover{
+  cursor: pointer;
+  width: 35px;
+    height: 35px;
+    top: -2px;
+    color: red;
+}
+
+
+/*end class component addContact */
+
+
+
+
+
+
+
+
+
+
+/* start class component View */
+
+
+.viewBox {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fit,minmax(400px,1fr)); */
+  grid-template-columns: 200px  1fr ;
+  padding:0 !important;
+  gap:5px
+  
+}
+
+.viewBox >div:nth-child(odd){
+  background-color:#03a9f4;
+  border-radius: 2px;
+  text-align: center;
+  padding: 0.2rem 0;
+}
+
+.viewBox >div:nth-child(even){
+  border-radius: 2px;
+  background-color: lightblue;
+  text-align: center;
+  text-align: center;
+  padding: 0.2rem 0;
+}
+
+.viewBox > div{
+display:flex;justify-content:center;align-items:center
+}
+.viewBox > div > svg{
+  flex:0.4;font-size:2rem;
+  color:#fff
+}
+.viewBox > div >span{
+  flex:0.6;font-weight: bold;text-align: right;
+}
+.main {width: auto }
+
+@media screen  and (max-width:768px) {
+  .main{
+    width: 100% !important;
+  }
+  .viewBox {
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit,minmax(400px,1fr)); */
+    grid-template-columns: repeat(auto-fit,minmax(400px,1fr)) !important;
+    padding:10px 0 ;
+     }
+        .viewBox >div:nth-child(1){
+      margin-top: 0 !important;
+    }
+     .viewBox >div:nth-child(odd){
+      margin-top: 0.5rem;
+    }
+}
+/* end class component View */
+
+
+
+
+
+
+
+
+
+
+
+/* start search component */
+
+
+
+.boxSearch{
+
+  width: 95%;
+  background: rgb(3, 169, 244);
+  position: absolute;
+  z-index: 10;
+  top: 85%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+ 
+
+}
+
+.detailSearched  p{
+  margin-bottom: 2px !important;
+  color: #fff;
+  padding: 5px 10px  ;
+  /* background-color: #03a9f4; */
+  /* border:1px solid #fff; */
+  flex: .9;
+  /* background-color: red; */
+  height: 50px;
+  line-height: 45px;
+}
+.detailSearched >img{
+  display: block;
+  height: 50px;
+  width: 25px;
+  object-fit: content;
+  flex: .1;
+}
+.detailSearched{
+  background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+  display: flex;
+  flex-direction: row-reverse;
+  border:1px solid #fff;
+  justify-content: center;
+  align-items: center;
+  
+
+
+}
+
+.detailSearched:hover{
+  background: grey !important;
+
+}
+.detailSearched:hover p{
+  color: #fff !important;
+  font-weight: bold;
+  cursor: pointer;
+}
+@media screen and (max-width:992px){
+  .boxSearch{
+    width: 93%  !important;
+    background: rgb(3, 169, 244);
+    position: absolute;
+    z-index: 10;
+    top: 85%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (max-width:768px){
+  .boxSearch{
+    width: 95%  !important;
+    background: rgb(3, 169, 244);   position: absolute;
+    z-index: 10;
+    top: 85%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+}
+@media screen and (max-width:568px){
+  .boxSearch{
+    width: 94%  !important;
+    background: rgb(3, 169, 244);
+    position: absolute;
+    z-index: 10;
+    top: 85%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* end search component */
+
+
+
+
+
+
+/* start about component */
+
+
+.aboutBox {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fit,minmax(400px,1fr)); */
+  grid-template-columns: 200px  1fr ;
+  padding:0 !important;
+  gap:25px
+  
+}
+
+.aboutBox > div{
+  text-align: center;
+}
+
+
+.aboutBox p{
+  padding:  0 15px;
+  line-height: 40px;
+  /* text-align: right; */
+  direction: rtl;
+  text-align: justify;
+}
+.aboutBox span{
+  font-weight: bold;
+}
+.cvIcon{
+  color: #03a9f4;
+  font-size: 1.3rem;
+  margin-left: 10px;
+}
+.aboutBox ul{
+
+  padding: 0;
+  margin: 0;
+
+}
+.aboutBox ul li{
+  display: flex;
+  direction: rtl;
+  padding: 5px 10px;
+
+}
+@media screen  and (max-width:768px){
+  .aboutBox{
+    display: grid;
+    grid-template-columns: 1fr ;
+    gap: 6px;
+   }
+   .bio{
+    display: flex;
+    justify-content: flex-start;
+    /* align-items: center; */
+    /* margin-right: 10px; */
+    /* background: blue; */
+    background: rgb(3, 169, 244);
+    color: #fff;
+    padding: 10px 10px 5px 0;
+    /* word-spacing: 18px; */
+    letter-spacing: 2px;
+  }
+  /* .aboutBox>div{
+    background-color: #03a9f4;
+  } */
+}
+@media screen and (min-width:768px){
+  .aboutBox > :nth-child(1){
+    padding: 5px 0;
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* background-color: red; */
+  justify-self: center;
+    grid-column:1/span 2 ;
+  }
+  
+}
+/* end about component */
+
+
+
+
+
+

@@ -1,0 +1,766 @@
+import React,{useState,useEffect,useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
+import {useFormik} from 'formik'
+import { contactSchema } from '../Helpers/Validations';
+import { contactsContext } from '../Helpers/ContactsContext';
+import {MdDisabledByDefault} from "react-icons/md";
+ import {Spinner} from './../Helpers/Index'
+const AddContact = ({}) => {
+  const {addPhotoToContact,setTextSearch,contact,jobs,citys,contactChangeHandler,createContactFormHandler,loading}=useContext(contactsContext)
+  const navigate=useNavigate()
+  const [selectedImage,setSelectedImage]=useState()
+  let x=undefined;
+
+const formik=useFormik({
+initialValues:{
+  fullName:"",
+  photo:"",
+  mobile: "",
+  job: "",
+  city: "",
+  email: "",
+},
+validationSchema:contactSchema,
+onSubmit:(values)=>{
+console.log(values);
+createContactFormHandler(values,URL.createObjectURL(selectedImage))
+}
+
+})
+
+
+  const imageChangeHandler=e=>{
+console.log(e.target.files.length);
+    if(e.target.files && e.target.files.length>0){
+      // console.log("selectedImage",e.target.files[0]);
+      x=URL.createObjectURL(e.target.files[0])
+      // console.log(x);
+      // alert(x);
+
+      addPhotoToContact(x)
+      setSelectedImage(e.target.files[0]);
+    }
+  }
+
+  useEffect(()=>{
+    setTextSearch({text:""})
+    // setRender(prev=>!prev)
+
+},[])
+
+
+// useEffect(()=>{
+
+
+//   b(URL.createObjectURL(selectedImage))
+
+
+// },[selectedImage]);
+
+  const removeSelectedImageHandler=()=>{
+
+  document.querySelector("input[type=file]").value=''
+     setSelectedImage();
+  }
+  return (
+        <div className="col-12  d-flex flex-column justify-content-center align-items-center p-1 mt-lg-1 mt-1 rounded">
+
+          {loading ? <Spinner/>:
+          (
+<>
+<div>
+    <img src={require("./../Assets/images/add-user.png")} style={{width:"100%",borderRadius:"10px"}} alt="" />
+  </div>
+  <div className='addContact text-center col-12 col-lg-9 aboutBox d-flex flex-column justify-content-center align-align-items-center'>
+
+
+
+ {/* <form action="" onSubmit={(event)=>{createContactFormHandler(event,URL.createObjectURL(selectedImage))}} className='form-control'> */}
+ <form action="" onSubmit={formik.handleSubmit} className='form-control'>
+                                
+          <div id='divFullName' className=' d-flex flex-column flex-lg-row ' >
+
+          <label htmlFor="" className="d-inline-block w-25 ">نام و نام خانوادگی</label>
+          <input id="fullName" type="text"  className='form-control d-inline-block w-50 ' value={formik.values.fullName} name='fullName'  onBlur={formik.handleBlur} onChange={formik.handleChange}/>
+          {formik.touched.fullName && formik.errors.fullName ? (<span className='noteFormActive  w-25'>{formik.errors.fullName}</span>) :null }
+
+          </div>
+
+          <div id='divMobile' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">موبایل</label>
+          <input id="mobile" type="tel"  className='form-control d-inline w-50' value={formik.values.mobile} name="mobile" onBlur={formik.handleBlur} onChange={formik.handleChange}/>
+          { formik.touched.mobile && formik.errors.mobile ? (<span className='noteFormActive  w-25'>{formik.errors.mobile}</span>) :null }
+
+          </div> 
+          {/* <div id='divAge' className='my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">سن</label>
+          <input type="number"  className='form-control d-inline w-75'/>
+          </div>    */}
+          <div id='divEmail' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">ایمیل</label>
+          <input id="email" type="email"  className='form-control d-inline w-50' name="email" value={formik.values.email} onBlur={formik.handleBlur} onChange={formik.handleChange}/>
+          {formik.touched.email &&  formik.errors.email ? (<span className='noteFormActive  w-25'>{formik.errors.email}</span>) :null }
+
+          </div>    
+
+
+          <div id='divJobs' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25"> مهارت </label>
+          <select name="job" id="job" value={formik.values.job} className='form-control d-inline w-50' onBlur={formik.handleBlur} onChange={formik.handleChange}>
+          <option value="" className='form-control d-inline w-75'  >مهارت های خود را انتخاب کنید</option>
+          {jobs.map(job=>
+            (
+              <option key={job.id} value={job.id}>{job.jobName}</option>
+            ))}
+          </select>
+          {formik.touched.job && formik.errors.job ? (<span className='noteFormActive  w-25'>{formik.errors.job}</span>) :null }
+
+          </div>    
+
+
+
+          <div id='divCitys' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25"> شهر </label>
+          <select name="city" id="city" className='form-control d-inline w-50' value={formik.values.city} onBlur={formik.handleBlur} onChange={formik.handleChange}>
+          <option value="" className='form-control d-inline w-75'>شهر محل سکونت خود را انتخاب کنید </option>
+          {citys.map(city=>
+          (<option key={city.id} value={city.id}>{city.cityName}</option>
+          ))}
+          </select>
+          {formik.touched.city &&  formik.errors.city ? (<span className='noteFormActive  w-25'>{formik.errors.city}</span>) :null }
+
+          </div> 
+
+          <div id='divPhoto' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">عکس</label>
+          <input id="photo" type="file" onInput={imageChangeHandler} className='form-control d-inline w-50'  onChange={formik.handleChange} accept='image/*' name="photo"/>
+          {formik.touched.photo &&  formik.errors.photo ? (<span className='noteFormActive  w-25'>{formik.errors.photo}</span>) :null }
+
+          </div>  
+
+          {/* <img src={"blob:http://localhost:9000/9e1fcf3e-e472-4654-ay7792-96a4a59cd25f"} alt="تصویر عکس aaaaaa"  style={{width:200,height:200,display:"block",margin:"0 auto"}}/> */}
+
+          {selectedImage && (
+
+          <div id="imagePreviewAddContact" className='d-flex flex-column my-3 justify-content-center align-content-center' style={{position:"relative"}}>
+            {/* <img src={"blob:http://localhost:3000/e400fdbe-8efb-42ed-a703-c5ab70205359"} alt="" /> */}
+            {/* {console.log("sel",selectedImage)} */}
+            <img src={URL.createObjectURL(selectedImage)} alt="تصویر عکس انتخابی"  style={{width:200,height:200,display:"block",margin:"0 auto"}}/>
+            
+            <MdDisabledByDefault id='removePreviewAddContact' onClick={removeSelectedImageHandler}  />
+          </div>
+
+          )}
+
+          <div id='divButton' className=' d-flex justify-content-around'>
+
+          <button type='submit' className='btn  w-25' style={{background:"#03a9f4",color:"#fff"}}>ثبت</button>
+          <button onClick={()=>{navigate("/Contacts")}} className='btn btn-danger w-25'>انصراف</button>
+          {/* <Link to={"/Contacts"} className='btn btn-danger w-25'>انصراف</Link> */}
+
+          </div>
+ </form>
+
+
+  </div>
+</>
+
+          )
+        }
+ 
+      </div>
+    );
+};
+
+export default AddContact;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+import React,{useState,useEffect,useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
+import {useFormik} from 'formik'
+import { contactSchema } from '../Helpers/Validations';
+import { contactsContext } from '../Helpers/ContactsContext';
+import {MdDisabledByDefault} from "react-icons/md";
+ import {Spinner} from './../Helpers/Index'
+const AddContact = ({}) => {
+  const {addPhotoToContact,setTextSearch,contact,jobs,citys,contactChangeHandler,createContactFormHandler,loading}=useContext(contactsContext)
+  const navigate=useNavigate()
+  const [selectedImage,setSelectedImage]=useState()
+  let x=undefined;
+
+const formik=useFormik({
+initialValues:{
+  fullName:"",
+  photo:"",
+  mobile: "",
+  job: "",
+  city: "",
+  email: "",
+},
+validationSchema:contactSchema,
+onSubmit:(values)=>{
+console.log(values);
+createContactFormHandler(values,URL.createObjectURL(selectedImage))
+}
+
+})
+
+
+  const imageChangeHandler=e=>{
+console.log(e.target.files.length);
+    if(e.target.files && e.target.files.length>0){
+      // console.log("selectedImage",e.target.files[0]);
+      x=URL.createObjectURL(e.target.files[0])
+      // console.log(x);
+      // alert(x);
+
+      addPhotoToContact(x)
+      setSelectedImage(e.target.files[0]);
+    }
+  }
+
+  useEffect(()=>{
+    setTextSearch({text:""})
+    // setRender(prev=>!prev)
+
+},[])
+
+
+// useEffect(()=>{
+
+
+//   b(URL.createObjectURL(selectedImage))
+
+
+// },[selectedImage]);
+
+  const removeSelectedImageHandler=()=>{
+
+  document.querySelector("input[type=file]").value=''
+     setSelectedImage();
+  }
+  return (
+        <div className="col-12  d-flex flex-column justify-content-center align-items-center p-1 mt-lg-1 mt-1 rounded">
+
+          {loading ? <Spinner/>:
+          (
+<>
+<div>
+    <img src={require("./../Assets/images/add-user.png")} style={{width:"100%",borderRadius:"10px"}} alt="" />
+  </div>
+  <div className='addContact text-center col-12 col-lg-9 aboutBox d-flex flex-column justify-content-center align-align-items-center'>
+
+
+
+ {/* <form action="" onSubmit={(event)=>{createContactFormHandler(event,URL.createObjectURL(selectedImage))}} className='form-control'> */}
+ <form action="" onSubmit={formik.handleSubmit} className='form-control'>
+                                
+          <div id='divFullName' className=' d-flex flex-column flex-lg-row ' >
+
+          <label htmlFor="" className="d-inline-block w-25 ">نام و نام خانوادگی</label>
+          <input id="fullName" type="text"  className='form-control d-inline-block w-50 '  name='fullName' {...formik.getFieldProps("fullName")}/>
+          {formik.touched.fullName && formik.errors.fullName ? (<span className='noteFormActive  w-25'>{formik.errors.fullName}</span>) :null }
+
+          </div>
+
+          <div id='divMobile' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">موبایل</label>
+          <input id="mobile" type="tel"  className='form-control d-inline w-50'name="mobile" {...formik.getFieldProps("mobile")} />
+          { formik.touched.mobile && formik.errors.mobile ? (<span className='noteFormActive  w-25'>{formik.errors.mobile}</span>) :null }
+
+          </div> 
+          {/* <div id='divAge' className='my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">سن</label>
+          <input type="number"  className='form-control d-inline w-75'/>
+          </div>    */}
+          <div id='divEmail' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">ایمیل</label>
+          <input id="email" type="email"  className='form-control d-inline w-50' name="email" {...formik.getFieldProps("email")}/>
+          {formik.touched.email &&  formik.errors.email ? (<span className='noteFormActive  w-25'>{formik.errors.email}</span>) :null }
+
+          </div>    
+
+
+          <div id='divJobs' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25"> مهارت </label>
+          <select name="job" id="job" className='form-control d-inline w-50' {...formik.getFieldProps("job")}>
+          <option value="" className='form-control d-inline w-75'  >مهارت های خود را انتخاب کنید</option>
+          {jobs.map(job=>
+            (
+              <option key={job.id} value={job.id}>{job.jobName}</option>
+            ))}
+          </select>
+          {formik.touched.job && formik.errors.job ? (<span className='noteFormActive  w-25'>{formik.errors.job}</span>) :null }
+
+          </div>    
+
+
+
+          <div id='divCitys' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25"> شهر </label>
+          <select name="city" id="city" className='form-control d-inline w-50' {...formik.getFieldProps("city")}>
+          <option value="" className='form-control d-inline w-75'>شهر محل سکونت خود را انتخاب کنید </option>
+          {citys.map(city=>
+          (<option key={city.id} value={city.id}>{city.cityName}</option>
+          ))}
+          </select>
+          {formik.touched.city &&  formik.errors.city ? (<span className='noteFormActive  w-25'>{formik.errors.city}</span>) :null }
+
+          </div> 
+
+          <div id='divPhoto' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">عکس</label>
+          <input id="photo" type="file" onInput={imageChangeHandler} className='form-control d-inline w-50'  onChange={formik.handleChange} accept='image/*' name="photo"/>
+          {formik.touched.photo &&  formik.errors.photo ? (<span className='noteFormActive  w-25'>{formik.errors.photo}</span>) :null }
+
+          </div>  
+
+          {/* <img src={"blob:http://localhost:9000/9e1fcf3e-e472-4654-ay7792-96a4a59cd25f"} alt="تصویر عکس aaaaaa"  style={{width:200,height:200,display:"block",margin:"0 auto"}}/> */}
+
+          {selectedImage && (
+
+          <div id="imagePreviewAddContact" className='d-flex flex-column my-3 justify-content-center align-content-center' style={{position:"relative"}}>
+            {/* <img src={"blob:http://localhost:3000/e400fdbe-8efb-42ed-a703-c5ab70205359"} alt="" /> */}
+            {/* {console.log("sel",selectedImage)} */}
+            <img src={URL.createObjectURL(selectedImage)} alt="تصویر عکس انتخابی"  style={{width:200,height:200,display:"block",margin:"0 auto"}}/>
+            
+            <MdDisabledByDefault id='removePreviewAddContact' onClick={removeSelectedImageHandler}  />
+          </div>
+
+          )}
+
+          <div id='divButton' className=' d-flex justify-content-around'>
+
+          <button type='submit' className='btn  w-25' style={{background:"#03a9f4",color:"#fff"}}>ثبت</button>
+          <button onClick={()=>{navigate("/Contacts")}} className='btn btn-danger w-25'>انصراف</button>
+          {/* <Link to={"/Contacts"} className='btn btn-danger w-25'>انصراف</Link> */}
+
+          </div>
+ </form>
+
+
+  </div>
+</>
+
+          )
+        }
+ 
+      </div>
+    );
+};
+
+export default AddContact;
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+import React,{useState,useEffect,useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
+import {Formik} from 'formik'
+import { contactSchema } from '../Helpers/Validations';
+import { contactsContext } from '../Helpers/ContactsContext';
+import {MdDisabledByDefault} from "react-icons/md";
+ import {Spinner} from './../Helpers/Index'
+const AddContact = ({}) => {
+  const {addPhotoToContact,setTextSearch,contact,jobs,citys,contactChangeHandler,createContactFormHandler,loading}=useContext(contactsContext)
+  const navigate=useNavigate()
+  const [selectedImage,setSelectedImage]=useState()
+  let x=undefined;
+
+
+  const imageChangeHandler=e=>{
+console.log(e.target.files.length);
+    if(e.target.files && e.target.files.length>0){
+      // console.log("selectedImage",e.target.files[0]);
+      x=URL.createObjectURL(e.target.files[0])
+      // console.log(x);
+      // alert(x);
+
+      addPhotoToContact(x)
+      setSelectedImage(e.target.files[0]);
+    }
+  }
+
+  useEffect(()=>{
+    setTextSearch({text:""})
+    // setRender(prev=>!prev)
+
+},[])
+
+
+// useEffect(()=>{
+
+
+//   b(URL.createObjectURL(selectedImage))
+
+
+// },[selectedImage]);
+
+  const removeSelectedImageHandler=()=>{
+
+  document.querySelector("input[type=file]").value=''
+     setSelectedImage();
+  }
+  return (
+        <div className="col-12  d-flex flex-column justify-content-center align-items-center p-1 mt-lg-1 mt-1 rounded">
+
+          {loading ? <Spinner/>:
+          (
+<>
+<div>
+    <img src={require("./../Assets/images/add-user.png")} style={{width:"100%",borderRadius:"10px"}} alt="" />
+  </div>
+  <div className='addContact text-center col-12 col-lg-9 aboutBox d-flex flex-column justify-content-center align-align-items-center'>
+
+
+
+<Formik  initialValues={{
+  fullName:"",
+  photo:"",
+  mobile: "",
+  job: "",
+  city: "",
+  email: "",
+}}
+validationSchema={contactSchema}
+onSubmit={(values)=>{
+console.log(values);
+createContactFormHandler(values,URL.createObjectURL(selectedImage))
+}}
+>
+
+
+{formik=>(
+
+ <form action="" onSubmit={formik.handleSubmit} className='form-control'>
+                                
+          <div id='divFullName' className=' d-flex flex-column flex-lg-row ' >
+
+          <label htmlFor="" className="d-inline-block w-25 ">نام و نام خانوادگی</label>
+          <input id="fullName" type="text"  className='form-control d-inline-block w-50 '  name='fullName' {...formik.getFieldProps("fullName")}/>
+          {formik.touched.fullName && formik.errors.fullName ? (<span className='noteFormActive  w-25'>{formik.errors.fullName}</span>) :null }
+
+          </div>
+
+          <div id='divMobile' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">موبایل</label>
+          <input id="mobile" type="tel"  className='form-control d-inline w-50'name="mobile" {...formik.getFieldProps("mobile")} />
+          { formik.touched.mobile && formik.errors.mobile ? (<span className='noteFormActive  w-25'>{formik.errors.mobile}</span>) :null }
+
+          </div> 
+          {/* <div id='divAge' className='my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">سن</label>
+          <input type="number"  className='form-control d-inline w-75'/>
+          </div>    */}
+          <div id='divEmail' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">ایمیل</label>
+          <input id="email" type="email"  className='form-control d-inline w-50' name="email" {...formik.getFieldProps("email")}/>
+          {formik.touched.email &&  formik.errors.email ? (<span className='noteFormActive  w-25'>{formik.errors.email}</span>) :null }
+
+          </div>    
+
+
+          <div id='divJobs' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25"> مهارت </label>
+          <select name="job" id="job" className='form-control d-inline w-50' {...formik.getFieldProps("job")}>
+          <option value="" className='form-control d-inline w-75'  >مهارت های خود را انتخاب کنید</option>
+          {jobs.map(job=>
+            (
+              <option key={job.id} value={job.id}>{job.jobName}</option>
+            ))}
+          </select>
+          {formik.touched.job && formik.errors.job ? (<span className='noteFormActive  w-25'>{formik.errors.job}</span>) :null }
+
+          </div>    
+
+
+
+          <div id='divCitys' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25"> شهر </label>
+          <select name="city" id="city" className='form-control d-inline w-50' {...formik.getFieldProps("city")}>
+          <option value="" className='form-control d-inline w-75'>شهر محل سکونت خود را انتخاب کنید </option>
+          {citys.map(city=>
+          (<option key={city.id} value={city.id}>{city.cityName}</option>
+          ))}
+          </select>
+          {formik.touched.city &&  formik.errors.city ? (<span className='noteFormActive  w-25'>{formik.errors.city}</span>) :null }
+
+          </div> 
+
+          <div id='divPhoto' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">عکس</label>
+          <input id="photo" type="file" onInput={imageChangeHandler} className='form-control d-inline w-50'  onChange={formik.handleChange} accept='image/*' name="photo"/>
+          {formik.touched.photo &&  formik.errors.photo ? (<span className='noteFormActive  w-25'>{formik.errors.photo}</span>) :null }
+
+          </div>  
+
+          {/* <img src={"blob:http://localhost:9000/9e1fcf3e-e472-4654-ay7792-96a4a59cd25f"} alt="تصویر عکس aaaaaa"  style={{width:200,height:200,display:"block",margin:"0 auto"}}/> */}
+
+          {selectedImage && (
+
+          <div id="imagePreviewAddContact" className='d-flex flex-column my-3 justify-content-center align-content-center' style={{position:"relative"}}>
+            {/* <img src={"blob:http://localhost:3000/e400fdbe-8efb-42ed-a703-c5ab70205359"} alt="" /> */}
+            {/* {console.log("sel",selectedImage)} */}
+            <img src={URL.createObjectURL(selectedImage)} alt="تصویر عکس انتخابی"  style={{width:200,height:200,display:"block",margin:"0 auto"}}/>
+            
+            <MdDisabledByDefault id='removePreviewAddContact' onClick={removeSelectedImageHandler}  />
+          </div>
+
+          )}
+
+          <div id='divButton' className=' d-flex justify-content-around'>
+
+          <button type='submit' className='btn  w-25' style={{background:"#03a9f4",color:"#fff"}}>ثبت</button>
+          <button onClick={()=>{navigate("/Contacts")}} className='btn btn-danger w-25'>انصراف</button>
+          {/* <Link to={"/Contacts"} className='btn btn-danger w-25'>انصراف</Link> */}
+
+          </div>
+ </form>
+
+)}
+
+</Formik>
+ {/* <form action="" onSubmit={(event)=>{createContactFormHandler(event,URL.createObjectURL(selectedImage))}} className='form-control'> */}
+
+
+  </div>
+</>
+
+          )
+        }
+ 
+      </div>
+    );
+};
+
+export default AddContact;
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+import React,{useState,useEffect,useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
+import {Formik,Form,Field,ErrorMessage} from 'formik'
+import { contactSchema } from '../Helpers/Validations';
+import { contactsContext } from '../Helpers/ContactsContext';
+import {MdDisabledByDefault} from "react-icons/md";
+ import {Spinner} from './../Helpers/Index'
+const AddContact = ({}) => {
+  const {addPhotoToContact,setTextSearch,contact,jobs,citys,contactChangeHandler,createContactFormHandler,loading}=useContext(contactsContext)
+  const navigate=useNavigate()
+  const [selectedImage,setSelectedImage]=useState()
+  let x=undefined;
+
+
+  const imageChangeHandler=e=>{
+console.log(e.target.files.length);
+    if(e.target.files && e.target.files.length>0){
+      // console.log("selectedImage",e.target.files[0]);
+      x=URL.createObjectURL(e.target.files[0])
+      // console.log(x);
+      // alert(x);
+
+      addPhotoToContact(x)
+      setSelectedImage(e.target.files[0]);
+    }
+  }
+
+  useEffect(()=>{
+    setTextSearch({text:""})
+    // setRender(prev=>!prev)
+
+},[])
+
+
+// useEffect(()=>{
+
+
+//   b(URL.createObjectURL(selectedImage))
+
+
+// },[selectedImage]);
+
+  const removeSelectedImageHandler=()=>{
+
+  document.querySelector("input[type=file]").value=''
+     setSelectedImage();
+  }
+  return (
+        <div className="col-12  d-flex flex-column justify-content-center align-items-center p-1 mt-lg-1 mt-1 rounded">
+
+          {loading ? <Spinner/>:
+          (
+<>
+<div>
+    <img src={require("./../Assets/images/add-user.png")} style={{width:"100%",borderRadius:"10px"}} alt="" />
+  </div>
+  <div className='addContact text-center col-12 col-lg-9 aboutBox d-flex flex-column justify-content-center align-align-items-center'>
+
+
+
+<Formik  initialValues={{
+  fullName:"",
+  photo:"",
+  mobile: "",
+  job: "",
+  city: "",
+  email: "",
+}}
+validationSchema={contactSchema}
+onSubmit={(values)=>{
+console.log(values);
+createContactFormHandler(values,URL.createObjectURL(selectedImage))
+}}
+>
+
+
+
+ <Form  className='form-control'>
+                                
+          <div id='divFullName' className=' d-flex flex-column flex-lg-row ' >
+
+          <label htmlFor="" className="d-inline-block w-25 ">نام و نام خانوادگی</label>
+          <Field  type="text"  className='form-control d-inline-block w-50 '  name='fullName'/>
+          <ErrorMessage name="fullName" render={msg=>(<span className='noteFormActive  w-25'>{msg}</span>)}/>
+</div>
+          <div id='divMobile' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">موبایل</label>
+          <Field  type="tel"  className='form-control d-inline w-50'name="mobile"  />
+          <ErrorMessage name="mobile" render={msg=>(<span className='noteFormActive  w-25'>{msg}</span>)}/>
+
+          </div> 
+          {/* <div id='divAge' className='my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">سن</label>
+          <input type="number"  className='form-control d-inline w-75'/>
+          </div>    */}
+          <div id='divEmail' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">ایمیل</label>
+          <Field id="email" type="email"  className='form-control d-inline w-50' name="email" />
+          <ErrorMessage name="email" render={msg=>(<span className='noteFormActive  w-25'>{msg}</span>)}/>
+
+          </div>    
+
+
+          <div id='divJobs' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25"> مهارت </label>
+          <Field as="select" select name="job" className='form-control d-inline w-50'>
+          <option value="" className='form-control d-inline w-75'  >مهارت های خود را انتخاب کنید</option>
+          {jobs.map(job=>
+            (
+              <option key={job.id} value={job.id}>{job.jobName}</option>
+            ))}
+          </Field>
+          <ErrorMessage name="job" render={msg=>(<span className='noteFormActive  w-25'>{msg}</span>)}/>
+
+          </div>    
+
+
+
+          <div id='divCitys' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25"> شهر </label>
+          <Field as="select" name="city"  className='form-control d-inline w-50' >
+          <option value="" className='form-control d-inline w-75'>شهر محل سکونت خود را انتخاب کنید </option>
+          {citys.map(city=>
+          (<option key={city.id} value={city.id}>{city.cityName}</option>
+          ))}
+          </Field>
+          <ErrorMessage name="city" render={msg=>(<span className='noteFormActive  w-25'>{msg}</span>)}/>
+
+          </div> 
+
+          <div id='divPhoto' className=' d-flex flex-column flex-lg-row my-3'>
+
+          <label htmlFor="" className="d-inline-block w-25">عکس</label>
+          <Field  type="file" onInput={imageChangeHandler} className='form-control d-inline w-50'   accept='image/*' name="photo"/>
+          <ErrorMessage name="photo" render={msg=>(<span className='noteFormActive  w-25'>{msg}</span>)}/>
+
+          </div>  
+
+          {/* <img src={"blob:http://localhost:9000/9e1fcf3e-e472-4654-ay7792-96a4a59cd25f"} alt="تصویر عکس aaaaaa"  style={{width:200,height:200,display:"block",margin:"0 auto"}}/> */}
+
+          {selectedImage && (
+
+          <div id="imagePreviewAddContact" className='d-flex flex-column my-3 justify-content-center align-content-center' style={{position:"relative"}}>
+            {/* <img src={"blob:http://localhost:3000/e400fdbe-8efb-42ed-a703-c5ab70205359"} alt="" /> */}
+            {/* {console.log("sel",selectedImage)} */}
+            <img src={URL.createObjectURL(selectedImage)} alt="تصویر عکس انتخابی"  style={{width:200,height:200,display:"block",margin:"0 auto"}}/>
+            
+            <MdDisabledByDefault id='removePreviewAddContact' onClick={removeSelectedImageHandler}  />
+          </div>
+
+          )}
+
+          <div id='divButton' className=' d-flex justify-content-around'>
+
+          <button type='submit' className='btn  w-25' style={{background:"#03a9f4",color:"#fff"}}>ثبت</button>
+          <button onClick={()=>{navigate("/Contacts")}} className='btn btn-danger w-25'>انصراف</button>
+          {/* <Link to={"/Contacts"} className='btn btn-danger w-25'>انصراف</Link> */}
+
+          </div>
+         
+ </Form>
+
+
+
+</Formik>
+ {/* <form action="" onSubmit={(event)=>{createContactFormHandler(event,URL.createObjectURL(selectedImage))}} className='form-control'> */}
+
+
+  </div>
+</>
+
+          )
+        }
+ 
+      </div>
+    );
+};
+
+export default AddContact;

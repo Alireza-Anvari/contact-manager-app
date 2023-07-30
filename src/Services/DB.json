@@ -1,0 +1,72 @@
+{
+  "contacts": [
+    {
+      "fullName": "علیرضا انوری ",
+      "photo": "https://dl.bahalmag.ir/images/%D8%B9%DA%A9%D8%B3_%D9%BE%D8%B1%DA%86%D9%85_%D8%A7%DB%8C%D8%B1%D8%A7%D9%86_%D8%A8%D8%B1%D8%A7%DB%8C_%D9%BE%D8%B1%D9%88%D9%81%D8%A7%DB%8C%D9%84_%D9%88%D8%A7%D8%AA%D8%B3%D8%A7%D9%BE/%D8%B9%DA%A9%D8%B3-%D9%BE%D8%B1%DA%86%D9%85-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%A8%D8%B1%D8%A7%DB%8C-%D9%BE%D8%B1%D9%88%D9%81%D8%A7%DB%8C%D9%84-%D9%88%D8%A7%D8%AA%D8%B3%D8%A7%D9%BE.jpg",
+      "mobile": "0912111111111",
+      "job": "3",
+      "city": "1",
+      "email": "ccc.anvari.1402@gmail.commmm",
+      "id": 1
+    },
+    {
+      "fullName": "Alireza Anvari majdlo",
+      "photo": "C:\\fakepath\\hadis2.jpg",
+      "mobile": "0912 569 6784",
+      "job": "3",
+      "city": "2",
+      "email": "Alireza.anvari.61@Gmail.Com",
+      "id": 2
+    },
+    {
+      "fullName": "Alireza Anvari majdlo",
+      "photo": "https://tailwindcss.com/_next/static/media/beach-house.9b9ee168.jpg",
+      "mobile": "0912 569 6784",
+      "job": "2",
+      "city": "2",
+      "email": "Alireza.anvari.61@Gmail.Com",
+      "id": 3
+    },
+    {
+      "fullName": "محمد انوری",
+      "photo": "https://tailwindcss.com/_next/static/media/1.4985e539.jpg",
+      "mobile": "0912 569 6784",
+      "job": "1",
+      "city": "2",
+      "email": "Alireza.anvari.61@Gmail.Com",
+      "id": 4
+    }
+  ],
+  "citys": [
+    {
+      "id": "1",
+      "cityName": "تهران"
+    },
+    {
+      "id": "2",
+      "cityName": "کرج"
+    },
+    {
+      "id": "3",
+      "cityName": "شهر قدس"
+    },
+    {
+      "id": "4",
+      "cityName": "سایر شهرها"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "1",
+      "jobName": "فول استک"
+    },
+    {
+      "id": "2",
+      "jobName": "بک اند کار"
+    },
+    {
+      "id": "3",
+      "jobName": "فرانت کار"
+    }
+  ]
+}
